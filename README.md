@@ -1,1 +1,1 @@
-[![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/user/sigurd-rw-activity4-x9gcc931/doc/tree/Activity%204.Rproj)
+[![Binder](http://mybinder.org/badge_logo.svg)]([http://mybinder.org/user/sigurd-rw-activity4-x9gcc931/doc/tree/Activity%204.Rproj](https://hub.2i2c.mybinder.org/user/sigurd-rw-activity4-x9gcc931/doc/tree/Activity%204.Rproj))

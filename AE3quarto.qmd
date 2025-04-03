@@ -1,0 +1,64 @@
+---
+title: "nobel-clean"
+format: docx
+editor: visual
+---
+
+## Application Exercise 3
+
+The project began by choosing our data set, this dataset contains information about 957 Nobel Prize winners from 1901 to 2017. This information includes the Nobel laureate’s name, birth and death date (if applicable), birth and death location (plus **latitude and longitude coordinates** for the locations), the year they won the Nobel Prize, the category of the Nobel Prize, and the “motivation” for the Nobel Prize.
+
+Next, the data was cleaned and formatted so that it could be used for analysis.
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+data <- read.csv("/cloud/project/nobel-prize-winners-1.csv", stringsAsFactors = FALSE,fileEncoding = "UTF-8")
+data <- read.csv("/cloud/project/nobel-prize-winners-1.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8")
+data <- data[!duplicated(data), ]
+colnames(data) <- tolower(gsub(" ", "_", colnames(data)))
+data$name <- gsub("[[:punct:]]", "", data$name)
+@@ -25,11 +26,9 @@ data <- data %>% rename(
+  diedcity = diedcity_original,
+  diedcountry = diedcountry_original
+)
+data[data == ""] <- NA
+data <- drop_na(data)
+data[is.na(data)] <- "Unknown"
+data[] <- lapply(data, function(x) if (is.character(x)) iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT") else x)
+write.csv(data, "/cloud/project/nobel-prize-winners-1_cleaned.csv",
+          row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(data, "/cloud/project/nobel-prize-winners-1_cleaned.csv", row.names = FALSE, fileEncoding = "UTF-8")
+```
+
+After the data had been cleaned, the file was able to be fed into [coconut-libtool](https://www.coconut-libtool.com/the-app) for analysis. This tool can be found at the URL <https://www.coconut-libtool.com/home>.![](images/Screenshot%202025-03-15%20155952.png){width="590"}
+
+First, the file is fed into a file checker, which verifies the format of the cvs file and gives the user options on what type of text analysis should be used on the data.
+
+![Once the type of text analysis you would like to use has been verified, the start analyzing option on the home page will ask which option we would like to use. It is important to use one of the text analysis options that has been verified for the cvs file in use.](images/clipboard-1242982675.png)
+
+![](images/clipboard-1566724399.png)
+
+After selecting Topic Modeling, the program will ask to be fed the data set again. When the data has been recognized, the metrics and methods to manipulate the data can be selected to generate the model.
+
+![For the model Biterm method chosen here, the column chosen to be analyzed was borncountry, or what country the Nobel Prize winners were born in. After plugging this into our program, we are shown different graphs that can be manipulated for more information. Here we can see two different graphs that describe the probability of which country produced a Nobel Prize winner in this data set.](images/clipboard-1699669049.png)
+
+![](images/clipboard-3096391054.png)
+
+## Reflection
+
+1.  The type of data used in this assignment was supposed to be a simple rendering of an evaluation model based on a cvs file compiled of Nobel Prize winners from 1901-2017. Cleaning the data with the tidyverse package included in R seemed easy enough, removing the duplicated entries and making the column headers nice and neat. Coconut Libtool was also used as a program to help with the visualization of the cleaned data by rendering a topical model of the cvs file by the country the prize winners were born in.
+2.  I, Joe, had a very hard time using R to complete this project and I got very frustrated a few times, especially because this was a group assignment and I didn't want to take anyone down with me. Trying to go between Posit Cloud which only allows one team member online at a time to edit or even view the project, the binder links to other online R repositories that would not run the sample codes for me or gave me 404 errors, then back to GitHub while keeping all the files straight was a huge hassle. I am familiar with R but no where near fluent enough to edit the provided code to fit a new data set so I am glad that the Coconut Libtool was an option.
+3.  I do think that I will keep this process in mind for the future after I have a more firm grip on how to communicate with the program in Rstudio. Conceptually, I can see it and it makes sense but I do not know the language well enough to make anything happen the way I need it to. There was a few times when I tried to go to ChatGPT just to see if it could give me some hints on what my code was missing, this did not work but it was encouraging to know that there are other tools out there to help me along.
+4.  The data analysis technique we choose was Topic Modeling specifically because it was one of two options that Coconut Libtool said was acceptable for our data. My first choice was to attempt the assignment with a clustering model that would show the number of prize winners born in cities that would cluster to a country that could cluster to a hemisphere on a map or something, but I could not edit that. So I tried burst detection next, with the thought that we could get a visualization based off of the prize winners frequency of births or deaths over a period of time, but I could not code that either. So, I landed on topic modeling to look at what I understand as how likely a winner from the data was from one of these countries and here we are.
+
+**\## Shelton Reflection**
+
+\
+1. The type of data that I used was just a rendering a CSV file of a collected dataset of Nobel Prize winners from before 2018. I cleaned the initial data with tidyverse, removed duplicate entries, and removed redundant information such as columns, differentiated modern and historic location names, etc, before renaming all the columns to align with these changes. I then had to standardize the name columns to account for characters in strings that were problematic while reading such as commas and diacritics. I then had to mask all the missing fields such as motivation and institutions for entries lacking them with 'unknown' values to stop any issues while visualizing the data. I then exported and rendered the data in a text format to ensure that all the strings are properly displayed.
+
+2\. I have used R studio many times while here in OU so I was already extremely familiar with the type of work this is. Although I did have to brush up on some of the simpler things due to having a few months of off time regarding the techniques. But after a few searches I was able to get back in the groove and figure it out. I wanted to help out more than I did, but I've been completely swamped with work this week and had to focus on my other priorities before touching up on this.  However, I made sure to encourage my partner along the way and properly communicate with them.
+
+3\. I'll likely use this process again in the future, just as how I have used R plenty of times in my career here in OU and potential future career in LIS. It is certainly very useful, although I am not as good at it as I would like to be (the syntax is really yucky in my opinion.) It's the ideal tool for handling large batches of data and converting them into workable forms to be analyzed for various reasons. I like the lightweight yet feature-full nature of its user interface with its speedy and uncompromising delivery of information.
+
+4\. Since we split up the workload, I don't have too much to say on the data analysis that he hasn't already said. We tried a few different models, such as clustering or bursts, and experienced plenty of problems. While I have previous experience working with it, I'm not very good at it and knew I wasn't going to be too much help. But I did try sending some pages I found of people having similar problems as Joe to try to see if it'd supply any answers for the problems he was encountering. I'm happy he was able to figure out a method that worked for him, since it's a method I would have never even thought of trying to use.

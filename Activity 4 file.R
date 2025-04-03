@@ -1,6 +1,6 @@
 install.packages("tidyverse")
 library(tidyverse)
-data <- read.csv("C:/Users/ghost/OneDrive/Documents/nobel-prize-winners-1.csv", stringsAsFactors = FALSE,fileEncoding = "UTF-8")
+data <- read.csv("nobel-prize-winners-1.csv", stringsAsFactors = FALSE,fileEncoding = "UTF-8")
 data <- data[!duplicated(data), ]
 colnames(data) <- tolower(gsub(" ", "_", colnames(data)))
 data$name <- gsub("[[:punct:]]", "", data$name)
@@ -15,5 +15,5 @@ data <- data %>% rename(
 data[data == ""] <- NA
 data <- drop_na(data)
 data[] <- lapply(data, function(x) if (is.character(x)) iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT") else x)
-write.csv(data, "C:/Users/ghost/OneDrive/Documents/nobel_prize_winners_cleaned.csv", 
+write.csv(data, "nobel_prize_winners_cleaned.csv", 
           row.names = FALSE, fileEncoding = "UTF-8")

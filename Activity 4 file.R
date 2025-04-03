@@ -1,6 +1,4 @@
-if (file.exists("install.R")) {
-  source("install.R")
-}
+install.packages("tidyverse")
 library(tidyverse)
 data <- read.csv("nobel-prize-winners-1.csv", stringsAsFactors = FALSE,fileEncoding = "UTF-8")
 data <- data[!duplicated(data), ]
